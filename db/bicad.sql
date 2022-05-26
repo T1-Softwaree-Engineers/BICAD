@@ -36,7 +36,7 @@ CREATE TABLE `usuarios` (
   `contacto` varchar(15) NOT NULL,
   `pwd` varchar(150) NOT NULL,
   `role` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
