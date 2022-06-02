@@ -35,6 +35,8 @@ header("location: login");
 
 <body id="page-top">
 
+    
+
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -50,7 +52,7 @@ header("location: login");
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <a class="nav-link active" href="./index.php"><img src="./public/img/bicadlogo.png" class="img-fluid" alt="Responsive image" width="300px"></a>
+                    <a class="nav-link active" href="./dashboard"><img src="./public/img/bicadlogo.png" class="img-fluid" alt="Responsive image" width="300px"></a>
                     <!-- Sidebar Toggle (Topbar) -->
  
                     <!-- Topbar Navbar -->
@@ -76,56 +78,7 @@ header("location: login");
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
+                        
 
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -134,7 +87,7 @@ header("location: login");
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $correo ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="public/img/undraw_profile.svg">
                             </a>
@@ -170,20 +123,16 @@ header("location: login");
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-                    </div>
 
-                    <!-- Content Row -->
+                     <!-- Content Row -->
 
-                    <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-7">
+                     <div class="row">
+                        <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-dark">Frecuencia Cardiaca</h6>
+                                    <h6 class="m-0 font-weight-bold text-dark">Localizacion en tiempo real</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -201,25 +150,51 @@ header("location: login");
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
+                                    <div class="ratio ratio-16x9">
+                                    <iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/SLGmrhI69DyR1g7uWa2uQo9ipCDZzblQIxrJ8hzWaxk?embed=true"></iframe>
+                                        </div>      
                                 </div>
                             </div>
                         </div>
 
+                 
+                            <div class="col-xl-4 col-lg-7">
+                                <div class="card shadow mb-4" style="height: 96.8%;"> 
+                                <div
+                                    class="card-header py-3 align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-dark">Notificaciones</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                        <div class="fw-bold"><iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/btA3PMUG92lLSfLkRCRXkUC1EUf99_SYYRrGCDHKctU?embed=true"></iframe></div>
+                                        <a href="tel:911" class="align-items-end">Llamar al numero de emergencia <i class="bi bi-telephone"></i></a>
+                                        
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">14</span>
+                                        
+                                    </li>
+                                    </ol>     
+                                </div>
+
+                                </div>          
+                            </div>
+        
                         <!-- Pie Chart -->
-                    </div>
-                    <div class="row">
+                     </div>
+                     
+                     <!-- <div class="row">
                         <div class="col-xl-6 col-lg-5">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
+                                 Card Header - Dropdown 
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-dark">Calorias</h6>
                                     
                                 </div>
-                                <!-- Card Body -->
+                                 Card Body 
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart"></canvas>
@@ -230,13 +205,13 @@ header("location: login");
                         </div>
                         <div class="col-xl-6 col-lg-5">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
+                                 Card Header - Dropdown 
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-dark">Pasos</h6>
                                     
                                 </div>
-                                <!-- Card Body -->
+                                 Card Body 
                                 <div class="card-body">
                                     <div class="chart-pie pt-4 pb-2">
                                         <canvas id="myPieChart2"></canvas>
@@ -244,7 +219,7 @@ header("location: login");
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                        
 
