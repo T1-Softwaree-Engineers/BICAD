@@ -8,7 +8,74 @@ if(!isset($_SESSION["usuario_login"]))  //Condicion Usuarios
 header("location: login");
 }
 ?>
+<?php
+	require_once "conn.php";
 
+	if(isset($_REQUEST['btn_register'])) //compruebe el nombre del botón "btn_register" y configúrelo
+	{
+		$nombre 	= $_REQUEST['txt_nombre'];
+		$apellidos 	= $_REQUEST['txt_apellidos'];
+		$edad		= $_REQUEST['txt_edad'];	//input nombre "txt_email"
+		$genero	    = $_REQUEST['txt_genero'];
+		$contacto 	= $_REQUEST['txt_contacto'];
+
+		if(empty($nombre))
+		{
+			$errorMsg[]="Ingrese su nombre";	//Revisar email input no vacio
+		}
+		else if(empty($apellidos))
+		{
+			$errorMsg[]="Este campo es obligatorio.";	//Revisar email input no vacio
+		}
+		else if(empty($edad))
+		{
+			$errorMsg[]="Ingrese edad";	//Revisar email input no vacio
+		}
+		else if(empty($genero))
+		{
+			$errorMsg[]="Este campo es obligatorio.";	//Revisar email input no vacio
+		}
+		else if(empty($contacto))
+		{
+			$errorMsg[]="Ingrese contacto";	//Revisar password vacio o nulo
+		}
+		else
+		{	
+			try
+			{	
+				$select_stmt=$db->prepare("SELECT ecuidador FROM adultosm WHERE ecuidador=:uemail"); // consulta sql  
+				$select_stmt->bindParam(":uemail",$correo);      //parámetros de enlace
+				$select_stmt->execute();
+				$row=$select_stmt->fetch(PDO::FETCH_ASSOC);	
+
+				if($row["ecuidador"] == $correo)
+				{
+                    echo("<script>alert('Ya tienes un adulto registrado')</script>");	//Verificar email existente
+                }
+                
+				else if(!isset($errorMsg["error"]))
+				{
+					$insert_stmt=$db->prepare("INSERT INTO adultosm(ecuidador,nombre,apellido,edad,genero,contacto) VALUES(:ecuidador, :unombre,:uapellidos,:uedad,:ugenero,:ucontacto)"); //Consulta sql de insertar
+					$insert_stmt->bindParam(":ecuidador",$correo);
+                    $insert_stmt->bindParam(":unombre",$nombre);
+					$insert_stmt->bindParam(":uapellidos",$apellidos);
+                    $insert_stmt->bindParam(":uedad",$edad);
+                    $insert_stmt->bindParam(":ugenero",$genero);
+                    $insert_stmt->bindParam(":ucontacto",$contacto);
+					if($insert_stmt->execute())
+					{
+						echo("<script>alert('Registro exitoso')</script>"); //Ejecuta consultas 
+						header("refresh:1;dashboard"); //Actualizar despues de 2 segundo a la portada
+					}
+				}
+			}
+			catch(PDOException $e)
+			{
+				echo $e->getMessage();
+			}
+		}
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,7 +102,13 @@ header("location: login");
 
 <body id="page-top">
 
-    
+
+        <style type="text/css">
+        #estilo{
+            width:150px;
+            display:table-cell;
+        }
+        </style>
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -118,9 +191,58 @@ header("location: login");
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Hola! Usuario</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#modalRegistrar">
+                            <i class="bi bi-person-plus-fill"></i> Registrar el Usuario BICAD</a>
                     </div>
+
+                    <!-- Button trigger modal -->
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Registrar un Usuario BICAD</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form aaction="" method="post">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Nombres:</span>
+                                        <input type="text" name="txt_nombre" class="form-control" placeholder="Nombres del usuario BICAD" name="nombres" aria-label="Nombres" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Apellidos:</span>
+                                        <input type="text" name="txt_apellidos" class="form-control" placeholder="Apellidos del usuario BICAD" name="apellidos"aria-label="Apellidos" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Edad:</span>
+                                        <input type="text" name="txt_edad" class="form-control" placeholder="Edad del usuario BICAD" name="edad" aria-label="Edad" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Género:</span>
+                                        <select class="form-select" name="txt_genero" aria-label="Default select example" name="genero" aria-describedby="basic-addon">
+                                            <option selected>Menu de opciones de genero:</option>
+                                            <option value="Hombre">Hombre</option>
+                                            <option value="Mujer">Mujer</option>
+                                            <option value="Indefinido">Prefiero no definirlo</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Contacto:</span>
+                                        <input type="text" name="txt_contacto" class="form-control" placeholder="Contacto de emergencia del usuario BICAD" name="contacto" aria-label="Contacto" aria-describedby="basic-addon1">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-primary" name="guardarusuario">Guardar Usuarios</button> -->
+                                        <input type="submit" name="btn_register" class="btn btn-primary" value="Registro">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                    </form>
+                                </div>
+
+                                </div>
+                            </div>
+                            </div>
 
                     <!-- Content Row -->
 
@@ -156,34 +278,54 @@ header("location: login");
                                 </div>
                             </div>
                         </div>
-
-                 
-                            <div class="col-xl-4 col-lg-7">
-                                <div class="card shadow mb-4" style="height: 96.8%;"> 
+                            <div class="col-xl-4">
+                                <div class="card shadow mb-4"> 
                                 <div
                                     class="card-header py-3 align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-dark">Notificaciones</h6>
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <ol class="list-group list-group-numbered">
+                                    <ol class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <div class="ms-2 me-auto">
-                                        <div class="fw-bold"><iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/btA3PMUG92lLSfLkRCRXkUC1EUf99_SYYRrGCDHKctU?embed=true"></iframe></div>
-                                        <a href="tel:911" class="align-items-end">Llamar al numero de emergencia <i class="bi bi-telephone"></i></a>
-                                        
-                                        </div>
-                                        <span class="badge bg-primary rounded-pill">14</span>
-                                        
+                                        <div class="ratio" style="--bs-aspect-ratio: 10%;">
+                                        <iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/MGqiO16RCVCiLUG9xkIAfYjA2f5RMmBql5Or_tLgkes?embed=true"></iframe></iframe>
+                                        </div>  
                                     </li>
                                     </ol>     
                                 </div>
 
-                                </div>          
+                                </div>
+                                <div class="card shadow mb-4"> 
+                                    <div class="card-header py-3 align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-dark">Datos del usuario BICAD</h6>
+                                    </div>
+                                <div class="card-body">
+                                <?php 
+                                    $miconexion = mysqli_connect("localhost", "root", "", "bicad");
+                                    $query="SELECT ecuidador,nombre, apellido, edad, genero, contacto FROM adultosm WHERE ecuidador = '$correo'";
+                                    if($result_contenido = mysqli_query($miconexion,$query))
+                                    {
+                                    if($row=mysqli_fetch_array($result_contenido))
+                                    {
+                                    ?> 
+                                <ul class="list-group pt-2 pb-4">
+                                    <li class="list-group-item">Nombres: <?php echo $row['nombre'] ?></li>
+                                    <li class="list-group-item">Apellidos: <?php echo $row['apellido'] ?></li>
+                                    <li class="list-group-item">Edad: <?php echo $row['edad'] ?></li>
+                                    <li class="list-group-item">Genero: <?php echo $row['genero'] ?></li>
+                                    <li class="list-group-item">Contacto de emergencias: <?php echo $row['contacto'] ?></li>
+                                    </ul>
+                                </div>
+                                <?php
+                                    }
+                                    }
+                                    ?>       
                             </div>
         
                         <!-- Pie Chart -->
                      </div>
+
                      
                      <!-- <div class="row">
                         <div class="col-xl-6 col-lg-5">
