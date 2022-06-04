@@ -22,16 +22,10 @@
           <h1 data-aos="fade-up">BICAD, el bastón inteligente que necesitas</h1>
           <h2 data-aos="fade-up" data-aos-delay="400">Para nosotros, la seguridad es lo más importante.</h2>
           <div data-aos="fade-up" data-aos-delay="600">
-            <div class="text-center text-lg-start">
-              <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                <span>¿Quiénes somos?</span>
-                <i class="bi bi-arrow-right"></i>
-              </a>
-            </div>
           </div>
         </div>
         <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-          <img src="assets/img/hero-img.png" class="img-fluid" alt="">
+          <img src="public/img/bicadlogo.png" class="img-fluid" alt="">
         </div>
       </div>
     </div>
@@ -52,17 +46,11 @@
               <p>
                 Utilizando BICAD, garantizarás la seguridad de la persona que más te importa.
               </p>
-              <div class="text-center text-lg-start">
-                <a href="#" class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
-                  <span>Ver más</span>
-                  <i class="bi bi-arrow-right"></i>
-                </a>
-              </div>
             </div>
           </div>
 
           <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+            <img src="public/img/bicad_equipo.jpg" class="img-fluid" alt="">
           </div>
 
         </div>
@@ -76,7 +64,6 @@
       <div class="container" data-aos="fade-up">
 
         <header class="section-header">
-          <h2>Nuestros valores</h2>
           <p>Nuestro equipo</p>
         </header>
 
@@ -125,7 +112,7 @@
         <div class="row">
 
           <div class="col-lg-6">
-            <img src="assets/img/features.png" class="img-fluid" alt="">
+            <img src="public/img/bicad_equipo2.jpg" class="img-fluid" alt="" style="border-radius: 10px;">
           </div>
 
           <div class="col-lg-6 mt-5 mt-lg-0 d-flex">

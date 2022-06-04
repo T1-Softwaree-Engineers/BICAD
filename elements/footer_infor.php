@@ -11,10 +11,10 @@
             </a>
             <p>BICAD, el bastón inteligente para adultos mayores o con discapacidad visual.</p>
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+              <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
               <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
             </div>
           </div>
 
@@ -22,7 +22,7 @@
             <h4>Enlaces</h4>
             <ul>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+              <!-- <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li> -->
             <!--Terminos y condiciones, politica, etc       
               <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>

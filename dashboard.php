@@ -75,6 +75,71 @@ header("location: login");
 			}
 		}
 	}
+
+    if(isset($_REQUEST['btn_actualizar'])) //compruebe el nombre del botón "btn_register" y configúrelo
+	{
+		$nombre 	= $_REQUEST['txt_nombre'];
+		$apellidos 	= $_REQUEST['txt_apellidos'];
+		$edad		= $_REQUEST['txt_edad'];	//input nombre "txt_email"
+		$genero	    = $_REQUEST['txt_genero'];
+		$contacto 	= $_REQUEST['txt_contacto'];
+
+		if(empty($nombre))
+		{
+			$errorMsg[]="Ingrese su nombre";	//Revisar email input no vacio
+		}
+		else if(empty($apellidos))
+		{
+			$errorMsg[]="Este campo es obligatorio.";	//Revisar email input no vacio
+		}
+		else if(empty($edad))
+		{
+			$errorMsg[]="Ingrese edad";	//Revisar email input no vacio
+		}
+		else if(empty($genero))
+		{
+			$errorMsg[]="Este campo es obligatorio.";	//Revisar email input no vacio
+		}
+		else if(empty($contacto))
+		{
+			$errorMsg[]="Ingrese contacto";	//Revisar password vacio o nulo
+		}
+		else
+		{	
+			try
+			{	
+				$select_stmt=$db->prepare("SELECT ecuidador FROM adultosm WHERE ecuidador=:uemail"); // consulta sql  
+				$select_stmt->bindParam(":uemail",$correo);      //parámetros de enlace
+				$select_stmt->execute();
+				$row=$select_stmt->fetch(PDO::FETCH_ASSOC);	
+
+				if($row["ecuidador"] == $correo)
+				{
+                    $update_stmt=$db->prepare("UPDATE adultosm SET nombre='$nombre', apellido='$apellidos', edad=$edad, genero='$genero', contacto='$contacto' WHERE ecuidador='$correo' "); //Consulta sql de actualizar
+                    //$update_stmt->bindParam(":unombre",$nombre);
+					//$insert_stmt->bindParam(":uapellidos",$apellidos);
+                    //$insert_stmt->bindParam(":uedad",$edad);
+                    //$insert_stmt->bindParam(":ugenero",$genero);
+                    //$insert_stmt->bindParam(":ucontacto",$contacto);
+					if($update_stmt->execute())
+					{
+						echo("<script>alert('Datos Actualizados exitosamente')</script>"); //Ejecuta consultas 
+						header("refresh:1;dashboard"); //Actualizar despues de 2 segundo a la portada
+                    //echo("<script>alert('Ya tienes un adulto registrado')</script>");	//Verificar email existente
+                }
+                
+				else if(!isset($errorMsg["error"]))
+				{
+					
+					}
+				}
+			}
+			catch(PDOException $e)
+			{
+				echo $e->getMessage();
+			}
+		}
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,6 +309,66 @@ header("location: login");
                             </div>
                             </div>
 
+                            <?php 
+                                    $miconexion = mysqli_connect("localhost", "root", "", "bicad");
+                                    $query="SELECT ecuidador,nombre, apellido, edad, genero, contacto FROM adultosm WHERE ecuidador = '$correo'";
+                                    if($result_contenido = mysqli_query($miconexion,$query))
+                                    {
+                                    if($row=mysqli_fetch_array($result_contenido))
+                                    {
+                            ?> 
+
+                            <!--Modal Editar-->
+                            <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Editar Datos del Usuario BICAD</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form aaction="" method="post">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Nombres:</span>
+                                        <input type="text" name="txt_nombre" class="form-control" placeholder="Nombres del usuario BICAD" name="nombres" aria-label="Nombres" aria-describedby="basic-addon1" value="<?php echo $row['nombre'] ?>">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Apellidos:</span>
+                                        <input type="text" name="txt_apellidos" class="form-control" placeholder="Apellidos del usuario BICAD" name="apellidos"aria-label="Apellidos" aria-describedby="basic-addon1" value="<?php echo $row['apellido'] ?>">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Edad:</span>
+                                        <input type="text" name="txt_edad" class="form-control" placeholder="Edad del usuario BICAD" name="edad" aria-label="Edad" aria-describedby="basic-addon1" value="<?php echo $row['edad'] ?>">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Género:</span>
+                                        <select class="form-select" name="txt_genero" aria-label="Default select example" name="genero" aria-describedby="basic-addon">
+                                            <option selected><?php echo $row['genero'] ?></option>
+                                            <option value="Hombre">Hombre</option>
+                                            <option value="Mujer">Mujer</option>
+                                            <option value="Indefinido">Prefiero no definirlo</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="estilo">Contacto:</span>
+                                        <input type="text" name="txt_contacto" class="form-control" placeholder="Contacto de emergencia del usuario BICAD" name="contacto" aria-label="Contacto" aria-describedby="basic-addon1" value="<?php echo $row['contacto'] ?>">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-primary" name="guardarusuario">Guardar Usuarios</button> -->
+                                        <input type="submit" name="btn_actualizar" class="btn btn-success" value="Actualizar">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                </div>
+                                    </form>
+                                </div>
+
+                                </div>
+                            </div>
+                            </div>
+                            <?php
+                                    }
+                                    }
+                                    ?> 
+
                     <!-- Content Row -->
 
                      <!-- Content Row -->
@@ -298,7 +423,8 @@ header("location: login");
                                 </div>
                                 <div class="card shadow mb-4"> 
                                     <div class="card-header py-3 align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-dark">Datos del usuario BICAD</h6>
+                                        <span><b>Datos del usuario BICAD</b></span>
+                                        <button class="btn btn-link" data-toggle="modal" data-target="#modalEditar"><i class="bi bi-pencil-fill"></i></button>
                                     </div>
                                 <div class="card-body">
                                 <?php 
