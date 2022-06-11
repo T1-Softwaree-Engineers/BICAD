@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-06-2022 a las 22:48:05
+-- Tiempo de generación: 03-06-2022 a las 18:34:48
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `adultosm` (
 --
 
 INSERT INTO `adultosm` (`id`, `ecuidador`, `nombre`, `apellido`, `edad`, `genero`, `contacto`) VALUES
-(1, 'eochoa11@ucol.mx', 'Enrique', 'Ochoa Preciado', 21, 'Hombre', '3141076334');
+(1, 'eochoa11@ucol.mx', 'Enrique de Jesús', 'Ochoa Preciado', 21, 'Hombre', '3141076334');
 
 -- --------------------------------------------------------
 

@@ -65,7 +65,7 @@ header("location: login");
 					if($insert_stmt->execute())
 					{
 						echo("<script>alert('Registro exitoso')</script>"); //Ejecuta consultas 
-						header("refresh:0;dashboard"); //Actualizar despues de 2 segundo a la portada
+						header("refresh:1;dashboard"); //Actualizar despues de 2 segundo a la portada
 					}
 				}
 			}
@@ -397,9 +397,9 @@ header("location: login");
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                <div class="ratio" style="--bs-aspect-ratio: 20%;">
-                                        <iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/MGqiO16RCVCiLUG9xkIAfYjA2f5RMmBql5Or_tLgkes?embed=true"></iframe>
-                                        </div>     
+                                    <div class="ratio ratio-16x9">
+                                    <iframe frameborder="0" src="https://stem.ubidots.com/app/dashboards/public/widget/SLGmrhI69DyR1g7uWa2uQo9ipCDZzblQIxrJ8hzWaxk?embed=true"></iframe>
+                                        </div>      
                                 </div>
                             </div>
                         </div>
